@@ -1,16 +1,14 @@
 name: Recordatorio de agua
 
 on:
-  schedule:
-    # Horas en UTC (Guatemala = UTC-6)
-    # Minutos "raros" para evitar los picos de tráfico de GitHub
-    - cron: "27 13 * * *"  # ~7:30 am Guatemala
-    - cron: "57 13 * * *"  # ~8:00 am Guatemala
-    - cron: "57 16 * * *"  # ~11:00 am Guatemala
-    - cron: "57 19 * * *"  # ~2:00 pm Guatemala
-    - cron: "57 21 * * *"  # ~4:00 pm Guatemala
-    - cron: "57 1 * * *"   # ~8:00 pm Guatemala
-  workflow_dispatch: # permite probarlo manualmente desde la pestaña Actions
+  # Lo dispara cron-job.org por API, con el mensaje en el input "mensaje".
+  # También se puede correr a mano desde la pestaña Actions.
+  workflow_dispatch:
+    inputs:
+      mensaje:
+        description: "Mensaje a enviar por Telegram"
+        required: false
+        default: "💧 ¡Prueba exitosa vos! El bot ya funciona 🎉😎"
 
 jobs:
   recordar:
@@ -20,25 +18,9 @@ jobs:
         env:
           TELEGRAM_TOKEN: ${{ secrets.TELEGRAM_TOKEN }}
           TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
-          SCHEDULE: ${{ github.event.schedule }}
+          # Se pasa por variable de entorno (no directo en el script) por seguridad
+          MENSAJE: ${{ inputs.mensaje }}
         run: |
-          case "$SCHEDULE" in
-            "27 13 * * *")
-              MENSAJE="🫗 ¡Qué onda vos! Llená el pachón antes de que se te olvide 💧😎" ;;
-            "57 13 * * *")
-              MENSAJE="☀️ Vos, ¿ya te tomaste el primer vaso de agua? Dale pues 💧🙌" ;;
-            "57 16 * * *")
-              MENSAJE="🤙 ¿Cómo vas con el agüita, vos? Dale un buen trago al pachón 🚰" ;;
-            "57 19 * * *")
-              MENSAJE="🍽️ Ya almorzaste, ¿verdad? Pues acordate de tomar agua 💧 no te me deshidratés 😅" ;;
-            "57 21 * * *")
-              MENSAJE="🌇 Vos, ya van las 4... ¿cómo vas con el agua? 💧 Tomá un buen trago 🥤" ;;
-            "57 1 * * *")
-              MENSAJE="🌙 Última llamada del día: ¿cumpliste con el agua o qué onda? 💧✅" ;;
-            *)
-              MENSAJE="💧 ¡Prueba exitosa vos! El bot ya funciona 🎉😎" ;;
-          esac
-
           curl -s -X POST "https://api.telegram.org/bot${TELEGRAM_TOKEN}/sendMessage" \
             --data-urlencode "chat_id=${TELEGRAM_CHAT_ID}" \
             --data-urlencode "text=${MENSAJE}"
