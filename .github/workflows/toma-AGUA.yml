@@ -3,12 +3,13 @@ name: Recordatorio de agua
 on:
   schedule:
     # Horas en UTC (Guatemala = UTC-6)
-    - cron: "30 13 * * *"  # 7:30 am Guatemala
-    - cron: "0 14 * * *"   # 8:00 am Guatemala
-    - cron: "0 17 * * *"   # 11:00 am Guatemala
-    - cron: "0 20 * * *"   # 2:00 pm Guatemala
-    - cron: "0 22 * * *"   # 4:00 pm Guatemala
-    - cron: "0 2 * * *"    # 8:00 pm Guatemala
+    # Minutos "raros" para evitar los picos de tráfico de GitHub
+    - cron: "27 13 * * *"  # ~7:30 am Guatemala
+    - cron: "57 13 * * *"  # ~8:00 am Guatemala
+    - cron: "57 16 * * *"  # ~11:00 am Guatemala
+    - cron: "57 19 * * *"  # ~2:00 pm Guatemala
+    - cron: "57 21 * * *"  # ~4:00 pm Guatemala
+    - cron: "57 1 * * *"   # ~8:00 pm Guatemala
   workflow_dispatch: # permite probarlo manualmente desde la pestaña Actions
 
 jobs:
@@ -22,17 +23,17 @@ jobs:
           SCHEDULE: ${{ github.event.schedule }}
         run: |
           case "$SCHEDULE" in
-            "30 13 * * *")
+            "27 13 * * *")
               MENSAJE="🫗 ¡Qué onda vos! Llená el pachón antes de que se te olvide 💧😎" ;;
-            "0 14 * * *")
+            "57 13 * * *")
               MENSAJE="☀️ Vos, ¿ya te tomaste el primer vaso de agua? Dale pues 💧🙌" ;;
-            "0 17 * * *")
+            "57 16 * * *")
               MENSAJE="🤙 ¿Cómo vas con el agüita, vos? Dale un buen trago al pachón 🚰" ;;
-            "0 20 * * *")
+            "57 19 * * *")
               MENSAJE="🍽️ Ya almorzaste, ¿verdad? Pues acordate de tomar agua 💧 no te me deshidratés 😅" ;;
-            "0 22 * * *")
+            "57 21 * * *")
               MENSAJE="🌇 Vos, ya van las 4... ¿cómo vas con el agua? 💧 Tomá un buen trago 🥤" ;;
-            "0 2 * * *")
+            "57 1 * * *")
               MENSAJE="🌙 Última llamada del día: ¿cumpliste con el agua o qué onda? 💧✅" ;;
             *)
               MENSAJE="💧 ¡Prueba exitosa vos! El bot ya funciona 🎉😎" ;;
