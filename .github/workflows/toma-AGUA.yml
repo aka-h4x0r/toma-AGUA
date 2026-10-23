@@ -33,11 +33,13 @@ jobs:
                 MENSAJE="☀️ Vos, ¿ya te tomaste el primer vaso de agua? Dale pues 💧🙌" ;;
               10|11|12)
                 MENSAJE="🤙 ¿Cómo vas con el agüita, vos? Dale un buen trago al pachón 🚰" ;;
-              13|14|15)
+              13|14)
                 MENSAJE="🍽️ Ya almorzaste, ¿verdad? Pues acordate de tomar agua 💧 no te me deshidratés 😅" ;;
-              16|17)
-                MENSAJE="🌇 Vos, ya van las 4... ¿cómo vas con el agua? 💧 Tomá un buen trago 🥤" ;;
-              18|19|20|21|22|23)
+              15|16)
+                MENSAJE="🌇 Vos, ya es media tarde... ¿cómo vas con el agua? 💧 Tomá un buen trago 🥤" ;;
+              17|18)
+                MENSAJE="🌆 Ya casi se acaba el día, vos. ¿Cómo vas con tu meta de agua? 💧💪" ;;
+              19|20|21|22|23)
                 MENSAJE="🌙 Última llamada del día: ¿cumpliste con el agua o qué onda? 💧✅" ;;
               *)
                 MENSAJE="💧 ¡Vos, tomá agua! 😎" ;;
